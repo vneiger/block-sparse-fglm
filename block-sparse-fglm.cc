@@ -149,8 +149,8 @@ vector<size_t> PolMatDom::mbasis( PolMatDom::PMatrix &approx, const PolMatDom::P
         // compute PLUQ decomposition of res_const
         BlasPermutation<size_t> P(m), Q(n);
         size_t rank = FFPACK::PLUQ( res_const.field(), FFLAS::FflasNonUnit,
-                                    m, n, res_const.getWritePointer(), res_const.getStride(),
-                                    P.getWritePointer(), Q.getWritePointer() );
+                                    m, n, res_const.getPointer(), res_const.getStride(),
+                                    P.getPointer(), Q.getPointer() );
 
         // compute a part of the left kernel basis of res_const:
         // -Lbot Ltop^-1 , stored in Lbot
@@ -161,7 +161,7 @@ vector<size_t> PolMatDom::mbasis( PolMatDom::PMatrix &approx, const PolMatDom::P
                       FFLAS::FflasNoTrans, FFLAS::FflasUnit,
                       m-rank, rank, approx.field().mOne,
                       Ltop.getPointer(), Ltop.getStride(),
-                      Lbot.getWritePointer(), Lbot.getStride() );
+                      Lbot.getPointer(), Lbot.getStride() );
 
         // Prop: this "kernel portion" is now stored in Lbot.
         //Then const_app = perm^{-1} P^{-1} [ [ X Id | 0 ] , [ Lbot | Id ] ] P perm
@@ -1022,8 +1022,8 @@ vector<zz_pX>  Block_Sparse_FGLM::get_lex_basis_non_generic(){
     for (long i = 0; i <= dp; i++)
         SetCoeff(B, dp-i, coeff(min_poly, i));
     zz_pX rest = B / revP;
-    cout << "revP: " << revP << endl;
-    cout << "rest: " << rest << endl;
+    //cout << "revP: " << revP << endl;
+    //cout << "rest: " << rest << endl;
     zz_pX inv_revP = zz_pX(0);
     if (rest != 1)
         inv_revP = InvMod(revP % rest, rest);
