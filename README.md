@@ -52,7 +52,7 @@ magma D:=a n:=b p:=c magma_inputs/random-W1-mixed.mgm solve.mgm
 
 Runing
 ~~~~
-./sfglm -M num_threads -F ../examples/data/filename_dat
+./sfglm -M num_threads -F examples/data/filename_dat
 ~~~~
 will run the code on the example in `filename.dat`, using `num_threads`
 threads.
